@@ -64,7 +64,7 @@ function Login(props) {
           </tr>
           <tr>
               <td>
-                <label forHtml="nftAddr">Tokens ids to sell (comma-separated):</label>
+                <label forHtml="nftAddr">Tokens ids to sell (comma-separated) [add single id in case of ERC721]: </label>
                 <input type="text" id="fromIds" name="fromIds" placeholder="1,2,3" />
               </td>
               <td>

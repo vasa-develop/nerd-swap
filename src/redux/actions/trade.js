@@ -305,6 +305,8 @@ var generateBuyDetails = (buyMarket, toNft, toIds, toAmounts, recipient) => {
 
 export const executeFromNftTrade = (payload) => async (dispatch) => { 
     var { recipient, fromNft, fromIds, fromAmounts, changeIn, sellMarket } = payload
+    var ETH = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'
+    var changeIn = changeIn || ETH;    
     fromIds = fromIds.split(",").map(i => parseInt(i))
     fromAmounts = fromAmounts.split(",").map(i => parseInt(i))
     var uniswapExchange = '0xb5C70AC5147eF7DbB060382F7A5C724C2bEF070d'
@@ -379,7 +381,6 @@ export const executeTrade = (payload) => async (dispatch) => {
 
     // var toNft = '0xF5b0A3eFB8e8E4c201e2A935F110eAaF3FFEcb8d'
     // var toIds = [212062] 
-    
     var sellData = generateSellDetails(isFromERC1155, isFromERC1155 ? [fromNft, fromIds, fromAmounts] : [fromNft, fromIds])
     var buyData = generateBuyDetails(buyMarket, toNft, toIds, toAmounts, recipient)
     var swapData = generateSwapDetails(isEthBasedMarket(buyMarket), await getSwapParameters(buyMarket, sellMarket, fromNft, generateEstimateData(buyMarket, toNft, toIds, toAmounts)))
