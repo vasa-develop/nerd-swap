@@ -6,7 +6,7 @@ import { executeTrade } from "../../redux/actions/trade";
 
 function Login(props) {
   const { user, trx, login, executeTrade } = props;
-
+  console.log("ui: ", trx)
   if (user == '') {
     login();
   }
@@ -52,7 +52,7 @@ function Login(props) {
                     <option value="cryptokitty_">Crypto Kitties</option>
                     <option value="cryptopunk_">Crypto Punks</option>
                     {/* decentraland can have multiple addresses */}
-                    <option value="decentraland_">Land (Decentraland)</option>
+                    {/* <option value="decentraland_">Land (Decentraland)</option> */}
                     <option value="eulerbeats_">EulerBeats</option>
                     <option value="knownorigin_">KnownOrigin</option>
                     <option value="mooncats_">Moon Cats</option>
@@ -123,7 +123,7 @@ function Login(props) {
         {
             (trx.transactionHash 
                 ? <font color="blue"><b>Transaction Submitted to ETH Mainnet: 
-                    <a href={"https://etherscan.io/tx/0x05418257db0fa14e0d461740791dac0e624007baeb6a51c6c2dcfcde2413b582"} target="_blank">{'0x05418257db0fa14e0d461740791dac0e624007baeb6a51c6c2dcfcde2413b582'}</a>               
+                    <a href={"https://etherscan.io/tx/"+trx.transactionHash} target="_blank">{trx.transactionHash}</a>               
                     </b></font>
                 : null)
         }

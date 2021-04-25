@@ -289,7 +289,6 @@ var generateBuyDetails = (buyMarket, toNft, toIds, toAmounts, recipient) => {
 
 export const executeTrade = (payload) => async (dispatch) => {
     var { recipient, fromNft, fromIds, fromAmounts, toNft, toIds, toAmounts, sellMarket, swapExchange, buyMarket } = payload
-    
     toIds = toIds.split(",").map(i => parseInt(i))
     toAmounts = toAmounts.split(",").map(i => parseInt(i))
     fromIds = fromIds.split(",").map(i => parseInt(i))
@@ -363,7 +362,7 @@ export const executeTrade = (payload) => async (dispatch) => {
     var tx = isFromERC1155
         ? await nft.methods.safeBatchTransferFrom(recipient, CAS, fromIds, fromAmounts, data).send({ 'from': web3.givenProvider.selectedAddress })
         : await nft.methods.safeTransferFrom(recipient, CAS, fromIds[0], data).send({ 'from': web3.givenProvider.selectedAddress })
-        
+    console.log(tx)
     dispatch({
         type: types.TRADE,
         payload: tx,

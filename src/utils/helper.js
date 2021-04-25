@@ -65,7 +65,7 @@ export const getNftAddress = (name) => {
             return "0x89eE76cC25Fcbf1714ed575FAa6A10202B71c26A";
         case 'rope':
             return "0xDb68Df0e86Bc7C6176E6a2255a5365f51113BCe8";
-        case 'wrapperMoonCat':
+        case 'mooncats':
             return "0x7C40c393DC0f283F318791d746d894DdD3693572";
     }
 }
@@ -124,7 +124,7 @@ export const getErc20Address = (name) => {
             return "0x303Af77Cf2774AABff12462C110A0CCf971D7DbE";
         case 'rope':
             return "0xB3CDC594D8C8e8152d99F162cF8f9eDFdc0A80A2";
-        case 'wrapperMoonCat':
+        case 'mooncats':
             return "0xf961A1Fa7C781Ecd23689fE1d0B7f3B6cBB2f972";
         case 'decentraland':
             return "0x0F5D2fB29fb7d3CFeE444a200298f468908cC942";
