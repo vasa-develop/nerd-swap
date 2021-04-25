@@ -5,6 +5,7 @@ import Store from "./redux/store";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import NerdSwap from "./components/NerdSwap";
 import Home from "./components/Home";
+import EthSwap from "./components/EthSwap";
 import Footer from "./components/Footer";
 
 function App() {
@@ -15,6 +16,9 @@ function App() {
           <Switch>
             <Route path="/nerd-swap">
               <NerdSwap />
+            </Route>
+            <Route path="/eth-swap">
+              <EthSwap />
             </Route>
             <Route path="">
               <Home />

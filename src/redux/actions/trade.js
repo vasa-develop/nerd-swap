@@ -287,6 +287,80 @@ var generateBuyDetails = (buyMarket, toNft, toIds, toAmounts, recipient) => {
     }, [buyParams, recipient]);
 }
 
+/* export const executeFromEthTrade = (payload) => async (dispatch) => { 
+    var { recipient, toNft, toIds, toAmounts, swapExchange, buyMarket } = payload
+    toIds = toIds.split(",").map(i => parseInt(i))
+    toAmounts = toAmounts.split(",").map(i => parseInt(i))
+    
+    var buyData = generateBuyDetails(buyMarket, toNft, toIds, toAmounts, recipient)
+    var swapData = []
+    let addrs = [changeIn, uniswapExchange, recipient]
+    
+    if (!isEthBasedMarket(buyMarket)) {
+        swapData = generateSwapDetails(isEthBasedMarket(buyMarket), await getSwapParameters(buyMarket, sellMarket, fromNft, generateEstimateData(buyMarket, toNft, toIds, toAmounts)))
+    }
+
+} */
+
+
+export const executeFromNftTrade = (payload) => async (dispatch) => { 
+    var { recipient, fromNft, fromIds, fromAmounts, changeIn, sellMarket } = payload
+    fromIds = fromIds.split(",").map(i => parseInt(i))
+    fromAmounts = fromAmounts.split(",").map(i => parseInt(i))
+    var uniswapExchange = '0xb5C70AC5147eF7DbB060382F7A5C724C2bEF070d'
+    var isFromERC1155 = isInputERC1155(fromNft)
+    var sellData = generateSellDetails(isFromERC1155, isFromERC1155 ? [fromNft, fromIds, fromAmounts] : [fromNft, fromIds])
+    let addrs = [changeIn, uniswapExchange, recipient]
+    var buyData = []
+
+    let data = web3.eth.abi.encodeParameters(
+        [
+            {
+                "SellDetails[]": {
+            
+                    "marketId": 'uint256',
+                    "sellData": 'bytes'
+                }
+            },
+            {
+                "SwapDetails[]": {
+                    "exchangeId": 'uint256',
+                    "swapData": 'bytes'
+                }
+            },
+            {
+                "BuyDetails[]": {
+                    "marketId": 'uint256',
+                    "buyData": 'bytes'
+            }
+            },
+            'address[]'
+        ],
+        [
+        [
+            {
+                "marketId": getMarketId(sellMarket),
+                "sellData": sellData
+            }
+        ],
+        [],
+        [],
+            addrs
+        ]
+    );
+    
+    var nft = new web3.eth.Contract(getABI("nft"), fromNft)
+    console.log(data)
+    var tx = isFromERC1155
+        ? await nft.methods.safeBatchTransferFrom(recipient, CAS, fromIds, fromAmounts, data).send({ 'from': web3.givenProvider.selectedAddress })
+        : await nft.methods.safeTransferFrom(recipient, CAS, fromIds[0], data).send({ 'from': web3.givenProvider.selectedAddress })
+    console.log(tx)
+    dispatch({
+        type: types.TRADE,
+        payload: tx,
+    });
+}
+
 export const executeTrade = (payload) => async (dispatch) => {
     var { recipient, fromNft, fromIds, fromAmounts, toNft, toIds, toAmounts, sellMarket, swapExchange, buyMarket } = payload
     toIds = toIds.split(",").map(i => parseInt(i))

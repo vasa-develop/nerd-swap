@@ -8,6 +8,7 @@ function Nav() {
         <p>
           <Link to="/">Markets</Link> {' | '}
           <Link to="/nerd-swap">Swap</Link> {' | '}  
+          <Link to="/eth-swap">Eth Swap</Link> {' | '}  
           <a target="_blank" href="https://github.com/vasa-develop/cross-asset-swap">GitHub</a>
         </p>
         <hr />
